@@ -1,0 +1,43 @@
+.posts {
+	margin-top: 30px;
+}
+
+.postDescription {
+	white-space: pre-wrap;
+	text-align: justify;
+	width: 60%;
+	margin: auto;
+	margin-top: 15px;
+}
+
+ .main-header {
+	background-image: url("../img/astronaut.jpg");
+	position: relative;
+	height: 300px;
+  }  
+
+  ul {
+	list-style-type: none;
+  }
+
+  .title {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	color: white;
+  }
+
+.postComment {
+	margin-bottom: 10px;
+}
+
+.btnMorePosts {
+	text-align: center;
+}
+
+.commentsSection {
+	margin-left: 5%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
