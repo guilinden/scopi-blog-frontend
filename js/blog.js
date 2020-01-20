@@ -1,9 +1,23 @@
-var blogClient =  angular.module('blogClient',[])
+var blogClient =  angular.module('blogClient',['ngRoute'])
+
+blogClient.config(['$routeProvider',
+
+        function($routeProvider){
+        $routeProvider.
+        when('/tags',{
+            templateUrl : '../tags.html',
+            controller: 'TagsController'
+        }).
+        when("/", {
+            templateUrl: '../index.html',
+            controller: 'BlogController'
+        });
+    }]);
 
 blogClient.controller('BlogController', ['$scope','$http', function($scope,$http){
 
   $scope.posts = []
-  $scope.perPage = 2
+  $scope.perPage = 10
   $scope.page = 1
   $scope.postCount = 0;
 
@@ -36,7 +50,7 @@ blogClient.controller('BlogController', ['$scope','$http', function($scope,$http
   };
 
   $scope.isButtonDisabled = function(){
-    return $scope.perPage == $scope.postCount
+    return $scope.posts.length >= $scope.postCount 
   }
 
 }]);
