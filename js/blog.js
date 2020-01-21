@@ -9,8 +9,12 @@ blogClient.config(['$routeProvider',
             controller: 'TagsController'
         }).
         when("/home", {
-            templateUrl: 'view/posts.html',
+            templateUrl: 'view/home.html',
             controller: 'BlogController'
+        })
+        .when("/posts", {
+          templateUrl: 'view/posts.html',
+          controller: 'BlogController'
         }).otherwise({
           redirectTo: '/home'
         });
