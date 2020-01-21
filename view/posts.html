@@ -27,6 +27,7 @@
 			<button type="button" class="btn btn-success btn-sm" ng-click="createNewComment(post.id,selectedUser.id,comment.id); $parent.newComment = false">Enviar</button>
 		  </div>
 		<button type="button" class="btn btn-link" ng-click="newAnswer = true">Responder</button>
+		<button type="button" class="btn btn-link" ng-click="deleteComment(post.id,comment.id)">Deletar</button>
 		<div ng-if="comment.linked_comments.length" ng-include="'comments.html'"></div>
 	  </ul>
 	</div>
@@ -37,7 +38,7 @@
 	  <a href=""><span>{{comment.user.name}}</span></a>
 	  <li class="postComment">{{comment.text}}</li>
 	  <button type="button" class="btn btn-link" ng-click="newAnswerForAnswer = true">Responder</button>
-
+	  <button type="button" class="btn btn-link" ng-click="deleteComment(post.id,comment.id)">Deletar</button>
 	  <div ng-if="newAnswerForAnswer">
 		<input type=text placeholder="Resposta" ng-model="$parent.$parent.$parent.$parent.$parent.comment.comment.text">
 		<select ng-model="$parent.$parent.selectedUser" ng-options="user.name for user in users"></select>

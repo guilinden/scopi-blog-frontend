@@ -107,6 +107,18 @@ blogClient.controller('BlogController', ['$scope','$http', function($scope,$http
     }
   }
 
+  $scope.deleteComment = function(post_id,comment_id){
+    $http({
+      method: 'DELETE',
+      url: 'http://localhost:3000/posts/' + post_id + '/comments/' + comment_id
+    }).then(function successCallback(response) {
+        console.log(response)
+        $scope.getPosts();
+      }, function errorCallback(response) {
+        console.log(response);
+      });
+  }
+
   $scope.createNewComment = function(post_id,user_id,comment_id=null){
     $scope.comment.comment.user_id = user_id;
     $scope.comment.comment.comment_id = comment_id;
