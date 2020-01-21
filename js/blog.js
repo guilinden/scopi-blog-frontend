@@ -111,6 +111,18 @@ blogClient.controller('BlogController', ['$scope','$http', function($scope,$http
     }
   }
 
+  $scope.deletePost = function(post_id){
+    $http({
+      method: 'DELETE',
+      url: 'http://localhost:3000/posts/' + post_id
+    }).then(function successCallback(response) {
+        console.log(response)
+        $scope.getPosts();
+      }, function errorCallback(response) {
+        console.log(response);
+      });
+  }
+
   $scope.deleteComment = function(post_id,comment_id){
     $http({
       method: 'DELETE',

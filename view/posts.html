@@ -19,7 +19,7 @@
 		<td><span ng-repeat="tag in post.tags">{{tag.name}}</span></td>
 		<td>{{post.user.name}}</td>
 		<td><button type="button" class="btn btn-primary" ng-click="">Editar</button></td>
-		<td><button type="button" class="btn btn-danger" ng-click="">Deletar</button></td>
+		<td><button type="button" class="btn btn-danger" ng-click="deletePost(post.id)">Deletar</button></td>
 	  </tr>
 	</tbody>
 </table>
