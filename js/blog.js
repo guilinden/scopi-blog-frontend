@@ -131,6 +131,13 @@ blogClient.controller('BlogController', ['$scope','$http', function($scope,$http
       data: $scope.comment
     }).then(function successCallback(response) {
         $scope.getPosts();
+        $scope.comment = {
+          "comment": {
+            "text": "",
+            "user_id": null,
+            "comment_id": null,
+          }
+        }
       }, function errorCallback(response) {
         console.log(response);
       });
