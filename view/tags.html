@@ -25,7 +25,7 @@
 		<td>
 			<span ng-if="editMode == false">{{tag.name}}</span>
 			<div ng-if="editMode == true">
-				<input value="{{tag.name}}"	placeholder="{{tag.name}}" type="text" ng-model="$parent.$parent.tagName">
+				<input ng-init="{{tag.name}}" placeholder="{{tag.name}}" type="text" ng-model="$parent.$parent.tagName">
 				<button type="button" class="btn btn-success" ng-click="updateTag(tag.id); $parent.editMode = false;tag.name = tagName">Salvar</button>
 			</div>
 		</td>

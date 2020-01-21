@@ -96,6 +96,42 @@ blogClient.controller('BlogController', ['$scope','$http', function($scope,$http
   $scope.perPage = 10
   $scope.page = 1
   $scope.postCount = 0;
+  $scope.newComment = false;
+  $scope.users = []
+
+  $scope.comment = {
+    "comment": {
+      "text": "",
+      "user_id": null,
+      "comment_id": null,
+    }
+  }
+
+  $scope.createNewComment = function(post_id,user_id,comment_id=null){
+    $scope.comment.comment.user_id = user_id;
+    $scope.comment.comment.comment_id = comment_id;
+    console.log(comment_id)
+    $http({
+      method: 'POST',
+      url: 'http://localhost:3000/posts/' + post_id + '/comments',
+      data: $scope.comment
+    }).then(function successCallback(response) {
+        $scope.getPosts();
+      }, function errorCallback(response) {
+        console.log(response);
+      });
+  };
+
+  $scope.getUsers = function(){
+    $http({
+      method: 'GET',
+      url: 'http://localhost:3000/users'
+    }).then(function successCallback(response) {
+        $scope.users = response.data;
+      }, function errorCallback(response) {
+        console.log(response);
+      });
+  };
 
   $scope.getPosts = function(){
     console.log("teste")
@@ -115,6 +151,7 @@ blogClient.controller('BlogController', ['$scope','$http', function($scope,$http
       });
   };
 
+  $scope.getUsers();
   $scope.getPosts();
 
   $scope.getMorePosts = function(){
