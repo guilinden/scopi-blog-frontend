@@ -1,0 +1,36 @@
+<h1 text-align="center">Tags</h1>
+<td><button type="button" class="btn btn-success" ng-click="newTag = true">Adicionar</button></td>
+
+<form ng-if="newTag">
+	<div class="form-group">
+	  <label for="exampleInputEmail1">Nome da Tag</label>
+	  <input type="text" class="form-control" placeholder="Nome da Tag" ng-model = $parent.tag.tag.name>
+	  <small id="emailHelp" class="form-text text-muted">O nome da Tag deve ser único</small>
+	</div>
+	<button type="submit" class="btn btn-primary" ng-click="createNewTag(); $parent.newTag = false">Enviar</button>
+ </form>
+
+<table class="table">
+	<thead>
+	  <tr>
+		<th scope="col">#</th>
+		<th scope="col">Nome</th>
+		<th scope="col"></th>
+		<th scope="col"></th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <tr ng-repeat="tag in tags">	
+		<td>{{tag.id}}</td>
+		<td>
+			<span ng-if="editMode == false">{{tag.name}}</span>
+			<div ng-if="editMode == true">
+				<input value="{{tag.name}}"	placeholder="{{tag.name}}" type="text" ng-model="$parent.$parent.tagName">
+				<button type="button" class="btn btn-success" ng-click="updateTag(tag.id); $parent.editMode = false;tag.name = tagName">Salvar</button>
+			</div>
+		</td>
+		<td><button type="button" class="btn btn-primary" ng-click="editMode = true">Editar</button></td>
+		<td><button type="button" class="btn btn-danger" ng-click="deleteTag(tag.id)">Deletar</button></td>
+	  </tr>
+	</tbody>
+</table>
