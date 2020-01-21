@@ -110,6 +110,8 @@ blogClient.controller('BlogController', ['$scope','$http', function($scope,$http
   $scope.createNewComment = function(post_id,user_id,comment_id=null){
     $scope.comment.comment.user_id = user_id;
     $scope.comment.comment.comment_id = comment_id;
+    console.log("--------------------- New Comment -----------------")
+    console.log($scope.comment)
     console.log(comment_id)
     $http({
       method: 'POST',

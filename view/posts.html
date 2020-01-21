@@ -21,7 +21,12 @@
 	  <ul ng-repeat="comment in post.comments">
 		<a href=""><span>{{comment.user.name}}</span></a>
 		<li class="postComment">{{comment.text}}</li>
-		<button type="button" class="btn btn-link" ng-click="newComment = true">Responder</button>
+		<div ng-if="newAnswer">
+			<input type=text placeholder="Resposta" ng-model="$parent.$parent.comment.comment.text">
+			<select ng-model="$parent.$parent.$parent.selectedUser" ng-options="user.name for user in users"></select>
+			<button type="button" class="btn btn-success btn-sm" ng-click="createNewComment(post.id,selectedUser.id,comment.id); $parent.newComment = false">Enviar</button>
+		  </div>
+		<button type="button" class="btn btn-link" ng-click="newAnswer = true">Responder</button>
 		<div ng-if="comment.linked_comments.length" ng-include="'comments.html'"></div>
 	  </ul>
 	</div>
@@ -31,12 +36,13 @@
 	<ul ng-repeat="comment in comment.linked_comments">
 	  <a href=""><span>{{comment.user.name}}</span></a>
 	  <li class="postComment">{{comment.text}}</li>
-	  <button type="button" class="btn btn-link" ng-click="newComment = true">Responder</button>
-	  <div ng-if="newComment">
-		<input type=text placeholder="Resposta" ng-model="$parent.comment.comment.text">
+	  <button type="button" class="btn btn-link" ng-click="newAnswerForAnswer = true">Responder</button>
+
+	  <div ng-if="newAnswerForAnswer">
+		<input type=text placeholder="Resposta" ng-model="$parent.$parent.$parent.$parent.$parent.comment.comment.text">
 		<select ng-model="$parent.$parent.selectedUser" ng-options="user.name for user in users"></select>
-		<button type="button" class="btn btn-success btn-sm" ng-click="createNewComment(post.id,selectedUser.id,$parent.comment.id); $parent.newComment = false">Enviar</button>
-	  <div>
+		<button type="button" class="btn btn-success btn-sm" ng-click="createNewComment(post.id,selectedUser.id,comment.id); $parent.newComment = false">Enviar</button>
+	  </div>
 	  <div ng-if="comment.linked_comments.length" ng-include="'comments.html'"></div>
 	</ul> 
  </script>
