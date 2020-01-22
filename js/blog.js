@@ -120,6 +120,7 @@ blogClient.controller('BlogController', function($http){
   vm.postCount = 0;
   vm.newComment = false;
   vm.users = []
+  vm.commentText = '';
 
   vm.comment = {
     "comment": {
@@ -153,7 +154,7 @@ blogClient.controller('BlogController', function($http){
       });
   }
 
-  vm.createNewComment = function(post_id,user_id,comment_id=null,text_content){
+  vm.createNewComment = function(post_id,user_id,text_content,comment_id=null){
     vm.comment.comment.user_id = user_id;
     vm.comment.comment.comment_id = comment_id;
     vm.comment.comment.text = text_content;

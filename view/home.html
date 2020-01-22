@@ -12,12 +12,12 @@
 	<h4>Comentários</h4>
 	<button type="button" class="btn btn-link" ng-click="newComment = true">Novo comentário</button>
 	<div ng-if="newComment">
-		<input type=text placeholder="Novo Comentário" ng-model="BlogCtrl.comment.comment.text">
+		<input type=text placeholder="Novo Comentário" ng-model="BlogCtrl.commentText">
 		<select ng-model="BlogCtrl.selectedUser" ng-options="user.name for user in BlogCtrl.users"></select>
-		<button type="button" class="btn btn-success btn-sm" ng-click="BlogCtrl.createNewComment(post.id,BlogCtrl.selectedUser.id); BlogCtrl.newComment = false">Enviar</button>
+		<button type="button" class="btn btn-success btn-sm" ng-click="BlogCtrl.createNewComment(post.id,BlogCtrl.selectedUser.id,BlogCtrl.commentText); BlogCtrl.newComment = false">Enviar</button>
 	</div>
 		<div ng-repeat="comment in post.comments">
-			<comments users="BlogCtrl.users" create-new-comment="BlogCtrl.createNewComment(post_id,user_id,comment_id,text_content)" post-id=post.id comment=comment delete-comment="BlogCtrl.deleteComment(post_id,comment_id)"></comments>
+			<comments users="BlogCtrl.users" create-new-comment="BlogCtrl.createNewComment(post_id,user_id,text_content,comment_id)" post-id=post.id comment=comment delete-comment="BlogCtrl.deleteComment(post_id,comment_id)"></comments>
 		</div>
   </div>
   

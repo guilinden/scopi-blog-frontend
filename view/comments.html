@@ -8,11 +8,11 @@
 		  <div ng-if="newAnswer">
 			  <input type=text placeholder="Resposta" ng-model="text">
 			  <select ng-model="selectedUser" ng-options="user.name for user in users"></select>
-			  <button type="button" class="btn btn-success btn-sm" ng-click="createNewComment({post_id: postId,user_id: selectedUser.id,comment_id: comment.id,text_content: text}); newComment = false">Enviar</button>
+			  <button type="button" class="btn btn-success btn-sm" ng-click="createNewComment({post_id: postId,user_id: selectedUser.id,text_content: text,comment_id: comment.id}); newComment = false">Enviar</button>
 		  </div>
 		  <div ng-if="comment.linked_comments.length">
 			<div ng-repeat="comment in comment.linked_comments">  
-			  <comments users=users create-new-comment="createNewComment({post_id,user_id,comment_id,text_content})" post-id=postId comment=comment delete-comment="deleteComment({post_id, comment_id})"></comments>
+			  <comments users=users create-new-comment="createNewComment({post_id,user_id,text_content,comment_id})" post-id=postId comment=comment delete-comment="deleteComment({post_id, comment_id})"></comments>
 			</div>
 		  </div>
 	 </div>
