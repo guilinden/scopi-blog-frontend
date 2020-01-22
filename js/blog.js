@@ -1,5 +1,20 @@
 var blogClient =  angular.module('blogClient',['ngRoute'])
 
+blogClient.directive('comments', function() {
+  var directive = {};
+  directive.restrict = 'E';
+  directive.templateUrl = 'view/comments.html'
+  directive.scope = {
+    comment : "=comment",
+    deleteComment: '&',
+    createNewComment: '&',
+    postId: '=',
+    users: '=',
+ }
+
+ return directive;
+});
+
 blogClient.config(['$routeProvider',
 
         function($routeProvider){
@@ -10,7 +25,8 @@ blogClient.config(['$routeProvider',
         }).
         when("/home", {
             templateUrl: 'view/home.html',
-            controller: 'BlogController'
+            controller: 'BlogController',
+            controllerAs: 'BlogCtrl'
         })
         .when("/posts", {
           templateUrl: 'view/posts.html',
@@ -94,16 +110,18 @@ blogClient.controller('TagsController', ['$scope','$http', function($scope,$http
 
 }]);
 
-blogClient.controller('BlogController', ['$scope','$http', function($scope,$http){
+blogClient.controller('BlogController', function($http){
 
-  $scope.posts = []
-  $scope.perPage = 10
-  $scope.page = 1
-  $scope.postCount = 0;
-  $scope.newComment = false;
-  $scope.users = []
+  var vm = this;
 
-  $scope.comment = {
+  vm.posts = []
+  vm.perPage = 10
+  vm.page = 1
+  vm.postCount = 0;
+  vm.newComment = false;
+  vm.users = []
+
+  vm.comment = {
     "comment": {
       "text": "",
       "user_id": null,
@@ -111,43 +129,44 @@ blogClient.controller('BlogController', ['$scope','$http', function($scope,$http
     }
   }
 
-  $scope.deletePost = function(post_id){
+  vm.deletePost = function(post_id){
     $http({
       method: 'DELETE',
       url: 'http://localhost:3000/posts/' + post_id
     }).then(function successCallback(response) {
         console.log(response)
-        $scope.getPosts();
+        vm.getPosts();
       }, function errorCallback(response) {
         console.log(response);
       });
   }
 
-  $scope.deleteComment = function(post_id,comment_id){
+  vm.deleteComment = function(post_id,comment_id){
     $http({
       method: 'DELETE',
       url: 'http://localhost:3000/posts/' + post_id + '/comments/' + comment_id
     }).then(function successCallback(response) {
         console.log(response)
-        $scope.getPosts();
+        vm.getPosts();
       }, function errorCallback(response) {
         console.log(response);
       });
   }
 
-  $scope.createNewComment = function(post_id,user_id,comment_id=null){
-    $scope.comment.comment.user_id = user_id;
-    $scope.comment.comment.comment_id = comment_id;
+  vm.createNewComment = function(post_id,user_id,comment_id=null,text_content){
+    vm.comment.comment.user_id = user_id;
+    vm.comment.comment.comment_id = comment_id;
+    vm.comment.comment.text = text_content;
     console.log("--------------------- New Comment -----------------")
-    console.log($scope.comment)
+    console.log(vm.comment)
     console.log(comment_id)
     $http({
       method: 'POST',
       url: 'http://localhost:3000/posts/' + post_id + '/comments',
-      data: $scope.comment
+      data: vm.comment
     }).then(function successCallback(response) {
-        $scope.getPosts();
-        $scope.comment = {
+        vm.getPosts();
+        vm.comment = {
           "comment": {
             "text": "",
             "user_id": null,
@@ -159,48 +178,49 @@ blogClient.controller('BlogController', ['$scope','$http', function($scope,$http
       });
   };
 
-  $scope.getUsers = function(){
+  vm.getUsers = function(){
     $http({
       method: 'GET',
       url: 'http://localhost:3000/users'
     }).then(function successCallback(response) {
-        $scope.users = response.data;
+        vm.users = response.data;
       }, function errorCallback(response) {
         console.log(response);
       });
   };
 
-  $scope.getPosts = function(){
+  vm.getPosts = function(){
     console.log("teste")
     $http({
       method: 'GET',
       url: 'http://localhost:3000/posts',
       headers: {
-        'perPage': $scope.perPage,
-        'page': $scope.page
+        'perPage': vm.perPage,
+        'page': vm.page
       }
     }).then(function successCallback(response) {
-        console.log(response);
-        $scope.posts = response.data.posts;
-        $scope.postCount = response.data.post_count
+        console.log(vm.perPage);
+        vm.posts = response.data.posts;
+        vm.postCount = response.data.post_count
+        console.log(vm.posts)
       }, function errorCallback(response) {
         console.log(response);
       });
   };
 
-  $scope.getUsers();
-  $scope.getPosts();
+  vm.getUsers();
+  vm.getPosts();
 
-  $scope.getMorePosts = function(){
-    console.log($scope.postCount)
-    if($scope.perPage < $scope.postCount){
-      $scope.perPage += 1
-      $scope.getPosts();
+  vm.getMorePosts = function(){
+    console.log(vm.postCount)
+    if(vm.perPage < vm.postCount){
+      vm.perPage += 1
+      vm.getPosts();
     }
   };
 
-  $scope.isButtonDisabled = function(){
-    return $scope.posts.length >= $scope.postCount 
+  vm.isButtonDisabled = function(){
+    return vm.posts.length >= vm.postCount 
   }
 
-}]);
+});

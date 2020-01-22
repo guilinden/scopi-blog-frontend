@@ -2,51 +2,25 @@
 	<h1 class="title">Blog do Gui</h1>
   </div>
 
-  <div ng-repeat="post in posts" class="posts">
+  <div ng-repeat="post in BlogCtrl.posts" class="posts">
 	<div class="text-center">
 	  <h1>{{post.title}}</h1>
 	  <h6>Escrito por: {{post.user.name}} as {{post.created_at | date:'dd-MM-yyyy'}} - atualizado em {{post.updated_at | date:'dd-MM-yyyy'}}</h6>
 	  <span>Tags: </span><a href=""><span ng-repeat="tag in post.tags">{{tag.name}} </span></a>
 	</div>
 	<p class="postDescription">{{post.description}}</p>
-
-	<div class="commentsSection">
-	  <h4>Comentários</h4>
-	  <div ng-if="newComment">
-		  <input type=text placeholder="Novo Comentário" ng-model="$parent.comment.comment.text">
-		  <select ng-model="$parent.$parent.selectedUser" ng-options="user.name for user in users"></select>
-		  <button type="button" class="btn btn-success btn-sm" ng-click="createNewComment(post.id,selectedUser.id); $parent.newComment = false">Enviar</button>
-	  </div>
-	  <button type="button" class="btn btn-link" ng-click="newComment = true">Novo comentário</button>
-	  <ul ng-repeat="comment in post.comments">
-		<a href=""><span>{{comment.user.name}}</span></a>
-		<li class="postComment">{{comment.text}}</li>
-		<div ng-if="newAnswer">
-			<input type=text placeholder="Resposta" ng-model="$parent.$parent.comment.comment.text">
-			<select ng-model="$parent.$parent.$parent.selectedUser" ng-options="user.name for user in users"></select>
-			<button type="button" class="btn btn-success btn-sm" ng-click="createNewComment(post.id,selectedUser.id,comment.id); $parent.newComment = false">Enviar</button>
-		  </div>
-		<button type="button" class="btn btn-link" ng-click="newAnswer = true">Responder</button>
-		<button type="button" class="btn btn-link" ng-click="deleteComment(post.id,comment.id)">Deletar</button>
-		<div ng-if="comment.linked_comments.length" ng-include="'comments.html'"></div>
-	  </ul>
+	<h4>Comentários</h4>
+	<button type="button" class="btn btn-link" ng-click="newComment = true">Novo comentário</button>
+	<div ng-if="newComment">
+		<input type=text placeholder="Novo Comentário" ng-model="BlogCtrl.comment.comment.text">
+		<select ng-model="BlogCtrl.selectedUser" ng-options="user.name for user in BlogCtrl.users"></select>
+		<button type="button" class="btn btn-success btn-sm" ng-click="BlogCtrl.createNewComment(post.id,BlogCtrl.selectedUser.id); BlogCtrl.newComment = false">Enviar</button>
 	</div>
+		<div ng-repeat="comment in post.comments">
+			<comments users="BlogCtrl.users" create-new-comment="BlogCtrl.createNewComment(post_id,user_id,comment_id,text_content)" post-id=post.id comment=comment delete-comment="BlogCtrl.deleteComment(post_id,comment_id)"></comments>
+		</div>
   </div>
   
-  <script type="text/ng-template" id="comments.html">
-	<ul ng-repeat="comment in comment.linked_comments">
-	  <a href=""><span>{{comment.user.name}}</span></a>
-	  <li class="postComment">{{comment.text}}</li>
-	  <button type="button" class="btn btn-link" ng-click="newAnswerForAnswer = true">Responder</button>
-	  <button type="button" class="btn btn-link" ng-click="deleteComment(post.id,comment.id)">Deletar</button>
-	  <div ng-if="newAnswerForAnswer">
-		<input type=text placeholder="Resposta" ng-model="$parent.$parent.$parent.$parent.$parent.comment.comment.text">
-		<select ng-model="$parent.$parent.selectedUser" ng-options="user.name for user in users"></select>
-		<button type="button" class="btn btn-success btn-sm" ng-click="createNewComment(post.id,selectedUser.id,comment.id); $parent.newComment = false">Enviar</button>
-	  </div>
-	  <div ng-if="comment.linked_comments.length" ng-include="'comments.html'"></div>
-	</ul> 
-  </script>
- <div>
-  <button class="btnMorePosts" ng-click="getMorePosts()" ng-disabled="isButtonDisabled()">Carregar Mais</button class="btnMorePosts">
+   <div>
+  <button class="btnMorePosts" ng-click="BlogCtrl.getMorePosts()" ng-disabled="BlogCtrl.isButtonDisabled()">Carregar Mais</button class="btnMorePosts">
  </div>
