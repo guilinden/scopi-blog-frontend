@@ -17,10 +17,10 @@
 		<button type="button" class="btn btn-success btn-sm" ng-click="BlogCtrl.createNewComment(post.id,BlogCtrl.selectedUser.id,BlogCtrl.commentText); BlogCtrl.newComment = false">Enviar</button>
 	</div>
 		<div ng-repeat="comment in post.comments">
-			<comments users="BlogCtrl.users" create-new-comment="BlogCtrl.createNewComment(post_id,user_id,text_content,comment_id)" post-id=post.id comment=comment delete-comment="BlogCtrl.deleteComment(post_id,comment_id)"></comments>
+			<comments-directive users="BlogCtrl.users" create-new-comment="BlogCtrl.createNewComment(post_id,user_id,text_content,comment_id)" post-id=post.id comment=comment delete-comment="BlogCtrl.deleteComment(post_id,comment_id)"></comments-directive>
 		</div>
   </div>
-  
+
    <div>
   <button class="btnMorePosts" ng-click="BlogCtrl.getMorePosts()" ng-disabled="BlogCtrl.isButtonDisabled()">Carregar Mais</button class="btnMorePosts">
  </div>

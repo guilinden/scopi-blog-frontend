@@ -11,8 +11,8 @@
 			  <button type="button" class="btn btn-success btn-sm" ng-click="createNewComment({post_id: postId,user_id: selectedUser.id,text_content: text,comment_id: comment.id}); newComment = false">Enviar</button>
 		  </div>
 		  <div ng-if="comment.linked_comments.length">
-			<div ng-repeat="comment in comment.linked_comments">  
-			  <comments users=users create-new-comment="createNewComment({post_id,user_id,text_content,comment_id})" post-id=postId comment=comment delete-comment="deleteComment({post_id, comment_id})"></comments>
+			<div ng-repeat="comment in comment.linked_comments">
+			  <comments-directive users=users create-new-comment="createNewComment({post_id,user_id,text_content,comment_id})" post-id=postId comment=comment delete-comment="deleteComment({post_id, comment_id})"></comments-directive>
 			</div>
 		  </div>
 	 </div>

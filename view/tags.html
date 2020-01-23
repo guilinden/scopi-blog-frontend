@@ -1,13 +1,13 @@
 <h1 text-align="center">Tags</h1>
-<td><button type="button" class="btn btn-success" ng-click="newTag = true">Adicionar</button></td>
+<td><button type="button" class="btn btn-success" ng-click="tagsCtrl.newTag = true">Adicionar</button></td>
 
-<form ng-if="newTag">
+<form ng-if="tagsCtrl.newTag">
 	<div class="form-group">
 	  <label for="exampleInputEmail1">Nome da Tag</label>
-	  <input type="text" class="form-control" placeholder="Nome da Tag" ng-model = $parent.tag.tag.name>
+	  <input type="text" class="form-control" placeholder="Nome da Tag" ng-model = tagsCtrl.tag.tag.name>
 	  <small id="emailHelp" class="form-text text-muted">O nome da Tag deve ser único</small>
 	</div>
-	<button type="submit" class="btn btn-primary" ng-click="createNewTag(); $parent.newTag = false">Enviar</button>
+	<button type="submit" class="btn btn-primary" ng-click="tagsCtrl.createNewTag(); tagsCtrl.newTag = false">Enviar</button>
  </form>
 
 <table class="table">
@@ -20,17 +20,17 @@
 	  </tr>
 	</thead>
 	<tbody>
-	  <tr ng-repeat="tag in tags">	
+	  <tr ng-repeat="tag in tagsCtrl.tags">
 		<td>{{tag.id}}</td>
 		<td>
-			<span ng-if="editMode == false">{{tag.name}}</span>
+			<span ng-if="editMode != true">{{tag.name}}</span>
 			<div ng-if="editMode == true">
-				<input ng-init="{{tag.name}}" placeholder="{{tag.name}}" type="text" ng-model="$parent.$parent.tagName">
-				<button type="button" class="btn btn-success" ng-click="updateTag(tag.id); $parent.editMode = false;tag.name = tagName">Salvar</button>
+				<input placeholder="{{tag.name}}" type="text" ng-model="tagsCtrl.tag.tag.name">
+				<button type="button" class="btn btn-success" ng-click="tagsCtrl.updateTag(tag.id); $parent.editMode = false">Salvar</button>
 			</div>
 		</td>
-		<td><button type="button" class="btn btn-primary" ng-click="editMode = true">Editar</button></td>
-		<td><button type="button" class="btn btn-danger" ng-click="deleteTag(tag.id)">Deletar</button></td>
+		<td><button type="button" class="btn btn-primary" ng-click="editMode = true;tagsCtrl.tag.tag.name = tag.name">Editar</button></td>
+		<td><button type="button" class="btn btn-danger" ng-click="tagsCtrl.deleteTag(tag.id)">Deletar</button></td>
 	  </tr>
 	</tbody>
 </table>
