@@ -30,7 +30,8 @@ blogClient.config(['$routeProvider',
         })
         .when("/posts", {
           templateUrl: 'view/posts.html',
-          controller: 'BlogController'
+          controller: 'BlogController',
+          controllerAs: 'BlogCtrl'
         }).otherwise({
           redirectTo: '/home'
         });
@@ -86,7 +87,7 @@ blogClient.controller('TagsController', ['$scope','$http', function($scope,$http
       });
   };
 
- 
+
   $scope.updateTag = function(id,name){
     tag = { "tag": {
         "name": $scope.tagName
@@ -114,6 +115,7 @@ blogClient.controller('BlogController', function($http){
 
   var vm = this;
 
+  vm.postTags = []
   vm.posts = []
   vm.perPage = 10
   vm.page = 1
@@ -121,6 +123,25 @@ blogClient.controller('BlogController', function($http){
   vm.newComment = false;
   vm.users = []
   vm.commentText = '';
+  vm.newPost = false;
+  vm.currentTag = 0;
+  vm.selectedTags = []
+  vm.tags = []
+
+  vm.selectedUser = {
+    "id": null,
+    "name": ""
+  }
+
+  vm.post = {
+    "post":{
+      "title": "",
+      "description": "",
+      "user_id": null,
+      "tag_ids": [],
+      "tags": []
+    }
+  }
 
   vm.comment = {
     "comment": {
@@ -128,6 +149,74 @@ blogClient.controller('BlogController', function($http){
       "user_id": null,
       "comment_id": null,
     }
+  }
+
+  vm.setPost = function(post) {
+    vm.post["post"] = post;
+    vm.post["post"]["tag_ids"] = []
+    var len = post.tags.length
+    for(var i=0;i<len;i++){
+      vm.post.post["tag_ids"][i] = post.tags[i]["id"]
+    }
+    console.log("VM POST ---------- - -- - -")
+    console.log(vm.post)
+  };
+
+  vm.removeTag = function(tag_id){
+    vm.post.post.tag_ids.splice( vm.post.post.tag_ids.indexOf(tag_id), 1 );
+
+    var len = vm.post.post.tags.length
+    for(var i=0;i<len;i++){
+      if(vm.post.post.tags[i]["id"] == tag_id) {
+        vm.post.post.tags.splice(i, 1);
+      }
+    }
+    console.log(vm.post)
+  };
+
+  vm.createNewPost = function(){
+    vm.post.post.user_id = vm.selectedUser.id;
+    console.log(vm.post)
+    $http({
+      method: 'POST',
+      url: 'http://localhost:3000/posts/',
+      data: vm.post
+    }).then(function successCallback(response) {
+        vm.getPosts();
+      }, function errorCallback(response) {
+        console.log(response);
+      });
+  };
+
+  vm.updateTag = function(){
+    vm.post.post.tag_ids.push(vm.currentTag.id)
+    vm.post.post.tags.push(vm.currentTag)
+  };
+
+  vm.getAllTags = function($htpp){
+    $http({
+      method: 'GET',
+      url: 'http://localhost:3000/tags/'
+    }).then(function successCallback(response) {
+        vm.tags = response.data;
+      }, function errorCallback(response) {
+        console.log(response);
+      });
+  };
+
+  vm.getAllTags();
+
+  vm.updatePost = function(){
+    $http({
+      method: 'PUT',
+      url: 'http://localhost:3000/posts/' + vm.post.post.id,
+      data: vm.post
+    }).then(function successCallback(response) {
+        console.log(response)
+        vm.getPosts();
+      }, function errorCallback(response) {
+        console.log(response);
+      });
   }
 
   vm.deletePost = function(post_id){
@@ -221,7 +310,7 @@ blogClient.controller('BlogController', function($http){
   };
 
   vm.isButtonDisabled = function(){
-    return vm.posts.length >= vm.postCount 
+    return vm.posts.length >= vm.postCount
   }
 
 });
