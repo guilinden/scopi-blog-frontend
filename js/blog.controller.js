@@ -133,7 +133,7 @@
 	      }, function errorCallback(response) {
 	        console.log(response);
 	      });
-	  }
+		}
 
 	  vm.createNewComment = function(post_id,user_id,text_content,comment_id=null){
 	    vm.comment.comment.user_id = user_id;
@@ -147,7 +147,14 @@
 	      url: 'http://localhost:3000/posts/' + post_id + '/comments',
 	      data: vm.comment
 	    }).then(function successCallback(response) {
-	        vm.getPosts();
+					console.log(response.data)
+					var len = vm.posts.length
+					for(var i=0;i<len;i++){
+							if (vm.posts[i]["id"] == post_id) {
+								vm.posts[i].comments = response.data
+							}
+					}
+
 	        vm.comment = {
 	          "comment": {
 	            "text": "",

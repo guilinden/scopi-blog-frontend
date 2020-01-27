@@ -50,7 +50,7 @@
 					<input type="text" class="form-control" placeholder="Título do post" ng-model="BlogCtrl.post.post.title" >
 					<small id="emailHelp" class="form-text text-muted">O Título deve ser único</small>
 					<label>Descrição</label>
-					<textarea class="form-control" aria-label="With textarea" ng-model="BlogCtrl.post.post.description"></textarea>
+					<textarea style="width: 100%;height: 100px;" class="form-control" aria-label="With textarea" ng-model="BlogCtrl.post.post.description"></textarea>
 					<button class="btn btn-primary btn-sm" ng-click="BlogCtrl.updateTag()">Adicionar Tag</button>
 					<select ng-model="BlogCtrl.currentTag" ng-options="tag.name for tag in BlogCtrl.tags"></select>
 					<p>Tags Selecionadas</p>

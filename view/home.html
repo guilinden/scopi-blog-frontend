@@ -6,7 +6,7 @@
 	<div class="text-center">
 	  <h1>{{post.title}}</h1>
 	  <h6>Escrito por: {{post.user.name}} as {{post.created_at | date:'dd-MM-yyyy'}} - atualizado em {{post.updated_at | date:'dd-MM-yyyy'}}</h6>
-	  <span>Tags: </span><a href=""><span ng-repeat="tag in post.tags">{{tag.name}} </span></a>
+	  <span>Tags: </span><a href="" ng-repeat="tag in post.tags"><span>{{tag.name}} </span></a>
 	</div>
 	<p class="postDescription">{{post.description}}</p>
 	<h4>Comentários</h4>
@@ -14,7 +14,7 @@
 	<div ng-if="newComment">
 		<input type=text placeholder="Novo Comentário" ng-model="BlogCtrl.commentText">
 		<select ng-model="BlogCtrl.selectedUser" ng-options="user.name for user in BlogCtrl.users"></select>
-		<button type="button" class="btn btn-success btn-sm" ng-click="BlogCtrl.createNewComment(post.id,BlogCtrl.selectedUser.id,BlogCtrl.commentText); BlogCtrl.newComment = false">Enviar</button>
+		<button type="button" class="btn btn-success btn-sm" ng-click="BlogCtrl.createNewComment(post.id,BlogCtrl.selectedUser.id,BlogCtrl.commentText); $parent.newComment = false">Enviar</button>
 	</div>
 		<div ng-repeat="comment in post.comments">
 			<comments-directive users="BlogCtrl.users" create-new-comment="BlogCtrl.createNewComment(post_id,user_id,text_content,comment_id)" post-id=post.id comment=comment delete-comment="BlogCtrl.deleteComment(post_id,comment_id)"></comments-directive>

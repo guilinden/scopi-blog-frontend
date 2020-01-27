@@ -4,14 +4,14 @@
 		  <li>{{ControllerComment.comment.text}}</li>
 		  <li class="postComment">{{comment.text}}</li>
 		  <button type="button" class="btn btn-link" ng-click="newAnswer = true">Responder</button>
-		  <button type="button" class="btn btn-link" ng-click="deleteComment({post_id: postId, comment_id: comment.id})">Deletar</button>
-		  <div ng-if="newAnswer">
+			<button type="button" class="btn btn-link" ng-click="deleteComment({post_id: postId, comment_id: comment.id})">Deletar</button>
+			<div ng-if="newAnswer">
 			  <input type=text placeholder="Resposta" ng-model="text">
-			  <select ng-model="selectedUser" ng-options="user.name for user in users"></select>
-			  <button type="button" class="btn btn-success btn-sm" ng-click="createNewComment({post_id: postId,user_id: selectedUser.id,text_content: text,comment_id: comment.id}); newComment = false">Enviar</button>
+				<select ng-model="selectedUser" ng-options="user.name for user in users"></select>
+			  <button type="button" class="btn btn-success btn-sm" ng-click="$parent.newAnswer = false; createNewComment({post_id: postId,user_id: selectedUser.id,text_content: text,comment_id: comment.id})">Enviar</button>
 		  </div>
-		  <div ng-if="comment.linked_comments.length">
-			<div ng-repeat="comment in comment.linked_comments">
+		  <div ng-if="comment.comments.length">
+			<div ng-repeat="comment in comment.comments">
 			  <comments-directive users=users create-new-comment="createNewComment({post_id,user_id,text_content,comment_id})" post-id=postId comment=comment delete-comment="deleteComment({post_id, comment_id})"></comments-directive>
 			</div>
 		  </div>
