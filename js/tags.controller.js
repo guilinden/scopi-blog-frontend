@@ -31,13 +31,18 @@
 	      });
 	  };
 
-	  vm.deleteTag = function(id){
+	  vm.deleteTag = function(tag_id){
 	    $http({
 	      method: 'DELETE',
-	      url: 'http://localhost:3000/tags/' + id
+	      url: 'http://localhost:3000/tags/' + tag_id
 	    }).then(function successCallback(response) {
-	        console.log(response);
-	        vm.getTags();
+					console.log(response);
+					var len = vm.tags.length
+					for(var i=0;i<len;i++){
+							if (vm.tags[i]["id"] == tag_id) {
+								vm.tags.splice(i, 1);
+							}
+					}
 	      }, function errorCallback(response) {
 	        console.log(response);
 	      });
