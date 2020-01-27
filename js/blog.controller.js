@@ -128,8 +128,13 @@
 	      method: 'DELETE',
 	      url: 'http://localhost:3000/posts/' + post_id + '/comments/' + comment_id
 	    }).then(function successCallback(response) {
-	        console.log(response)
-	        vm.getPosts();
+					console.log(response)
+					var len = vm.posts.length
+					for(var i=0;i<len;i++){
+						if (vm.posts[i]["id"] == post_id) {
+							vm.posts[i].comments = response.data.data
+						}
+					}
 	      }, function errorCallback(response) {
 	        console.log(response);
 	      });
