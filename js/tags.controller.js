@@ -61,15 +61,21 @@
 	  };
 
 
-	  vm.updateTag = function(id){
+	  vm.updateTag = function(tag_id){
 
 	    $http({
 	      method: 'PUT',
-	      url: 'http://127.0.0.1:3000/tags/' + id,
+	      url: 'http://127.0.0.1:3000/tags/' + tag_id,
 	      data: vm.tag
 	    }).then(function successCallback(response) {
-	        console.log(response);
-	        vm.getTags();
+					console.log(response);
+					var len = vm.tags.length
+					for(var i=0;i<len;i++){
+							if (vm.tags[i]["id"] == tag_id) {
+								vm.tags[i] = response.data;
+							}
+					}
+	        //vm.getTags();
 	      }, function errorCallback(response) {
 	        console.log(response);
 	      });
