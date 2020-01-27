@@ -66,6 +66,18 @@
 	    console.log(vm.post)
 	  };
 
+		vm.cancelEditPost = function(){
+			vm.post = {
+				"post":{
+					"title": "",
+					"description": "",
+					"user_id": null,
+					"tag_ids": [],
+					"tags": []
+				}
+			}
+		}
+
 	  vm.createNewPost = function(){
 	    vm.post.post.user_id = vm.selectedUser.id;
 	    console.log(vm.post)
