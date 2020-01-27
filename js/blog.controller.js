@@ -74,7 +74,7 @@
 	      url: 'http://localhost:3000/posts/',
 	      data: vm.post
 	    }).then(function successCallback(response) {
-	        vm.getPosts();
+	        vm.posts.push(response.data);
 	      }, function errorCallback(response) {
 	        console.log(response);
 	      });
@@ -105,7 +105,12 @@
 	      data: vm.post
 	    }).then(function successCallback(response) {
 	        console.log(response)
-	        vm.getPosts();
+	        var len = vm.posts.length
+					for(var i=0;i<len;i++){
+							if (vm.posts[i]["id"] == vm.post.post.id) {
+								vm.posts[i] = response.data;
+							}
+					}
 	      }, function errorCallback(response) {
 	        console.log(response);
 	      });
@@ -116,8 +121,14 @@
 	      method: 'DELETE',
 	      url: 'http://localhost:3000/posts/' + post_id
 	    }).then(function successCallback(response) {
-	        console.log(response)
-	        vm.getPosts();
+					console.log(response)
+					var len = vm.posts.length
+					for(var i=0;i<len;i++){
+							if (vm.posts[i]["id"] == post_id) {
+								vm.posts.splice(i, 1);
+							}
+					}
+	        //vm.getPosts();
 	      }, function errorCallback(response) {
 	        console.log(response);
 	      });

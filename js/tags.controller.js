@@ -60,7 +60,6 @@
 	      });
 	  };
 
-
 	  vm.updateTag = function(tag_id){
 
 	    $http({
@@ -75,7 +74,6 @@
 								vm.tags[i] = response.data;
 							}
 					}
-	        //vm.getTags();
 	      }, function errorCallback(response) {
 	        console.log(response);
 	      });
