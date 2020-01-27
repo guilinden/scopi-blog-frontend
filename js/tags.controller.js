@@ -24,8 +24,8 @@
 	      url: 'http://localhost:3000/tags',
 	      data: vm.tag
 	    }).then(function successCallback(response) {
-	        console.log(response);
-	        vm.getTags();
+					console.log(response);
+					vm.tags.push(response.data)
 	      }, function errorCallback(response) {
 	        console.log(response);
 	      });
