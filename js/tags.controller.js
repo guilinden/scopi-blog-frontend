@@ -45,7 +45,6 @@
 	  };
 
 	  vm.getTags = function(){
-	    console.log("teste")
 	    $http({
 	      method: 'GET',
 	      url: 'http://localhost:3000/tags'

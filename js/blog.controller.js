@@ -18,7 +18,8 @@
 	  vm.newPost = false;
 	  vm.currentTag = 0;
 	  vm.selectedTags = []
-	  vm.tags = []
+		vm.tags = []
+		vm.filterParams = {}
 
 	  vm.selectedUser = {
 	    "id": null,
@@ -184,17 +185,20 @@
 	      });
 	  };
 
-	  vm.getPosts = function(){
-	    console.log("teste")
+	  vm.getPosts = function(params=null){
+			console.log(params)
+			var headers =  {
+				'perPage': vm.perPage,
+				'page': vm.page
+			}
+			if(params){
+				var headersMod = Object.assign({}, params, headers);
+			}
 	    $http({
 	      method: 'GET',
 	      url: 'http://localhost:3000/posts',
-	      headers: {
-	        'perPage': vm.perPage,
-	        'page': vm.page
-	      }
+	      headers: headersMod
 	    }).then(function successCallback(response) {
-	        console.log(response);
 	        vm.posts = response.data.posts;
 	        vm.postCount = response.data.post_count
 	        console.log(vm.posts)

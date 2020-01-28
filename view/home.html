@@ -6,7 +6,7 @@
 	<div class="text-center">
 	  <h1>{{post.title}}</h1>
 	  <h6>Escrito por: {{post.user.name}} as {{post.created_at | date:'dd-MM-yyyy'}} - atualizado em {{post.updated_at | date:'dd-MM-yyyy'}}</h6>
-	  <span>Tags: </span><a href="" ng-repeat="tag in post.tags"><span>{{tag.name}} </span></a>
+	  <span>Tags: </span><a ng-click="BlogCtrl.getPosts({'tag': tag.name})" href ng-repeat="tag in post.tags"><span>{{tag.name}} </span></a>
 	</div>
 	<p class="postDescription">{{post.description}}</p>
 	<h4>Comentários</h4>
