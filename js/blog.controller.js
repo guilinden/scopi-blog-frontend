@@ -56,13 +56,8 @@
 
 	  vm.removeTag = function(tag_id){
 	    vm.post.post.tag_ids.splice( vm.post.post.tag_ids.indexOf(tag_id), 1 );
-
-	    var len = vm.post.post.tags.length
-	    for(var i=0;i<len;i++){
-	      if(vm.post.post.tags[i]["id"] == tag_id) {
-	        vm.post.post.tags.splice(i, 1);
-	      }
-	    }
+			var tagIndex = vm.post.post.tags.findIndex(tag => tag.id == tag_id);
+			vm.post.post.tags.splice(tagIndex, 1);
 	    console.log(vm.post)
 	  };
 
@@ -116,13 +111,9 @@
 	      url: 'http://localhost:3000/posts/' + vm.post.post.id,
 	      data: vm.post
 	    }).then(function successCallback(response) {
-	        console.log(response)
+					var postIndex = vm.posts.findIndex(post => post.id == post_id);
+					vm.posts[postIndex] = response.data;
 	        var len = vm.posts.length
-					for(var i=0;i<len;i++){
-							if (vm.posts[i]["id"] == vm.post.post.id) {
-								vm.posts[i] = response.data;
-							}
-					}
 	      }, function errorCallback(response) {
 	        console.log(response);
 	      });
@@ -134,13 +125,8 @@
 	      url: 'http://localhost:3000/posts/' + post_id
 	    }).then(function successCallback(response) {
 					console.log(response)
-					var len = vm.posts.length
-					for(var i=0;i<len;i++){
-							if (vm.posts[i]["id"] == post_id) {
-								vm.posts.splice(i, 1);
-							}
-					}
-	        //vm.getPosts();
+					var postIndex = vm.posts.findIndex(post => post.id == post_id);
+					vm.posts.splice(postIndex, 1);
 	      }, function errorCallback(response) {
 	        console.log(response);
 	      });
@@ -152,12 +138,8 @@
 	      url: 'http://localhost:3000/posts/' + post_id + '/comments/' + comment_id
 	    }).then(function successCallback(response) {
 					console.log(response)
-					var len = vm.posts.length
-					for(var i=0;i<len;i++){
-						if (vm.posts[i]["id"] == post_id) {
-							vm.posts[i].comments = response.data.data
-						}
-					}
+					var postIndex = vm.posts.findIndex(post => post.id == post_id);
+					vm.posts[postIndex].comments = response.data.data
 	      }, function errorCallback(response) {
 	        console.log(response);
 	      });
@@ -176,12 +158,8 @@
 	      data: vm.comment
 	    }).then(function successCallback(response) {
 					console.log(response.data)
-					var len = vm.posts.length
-					for(var i=0;i<len;i++){
-							if (vm.posts[i]["id"] == post_id) {
-								vm.posts[i].comments = response.data
-							}
-					}
+					var postIndex = vm.posts.findIndex(post => post.id == post_id);
+					vm.posts[postIndex].comments = response.data;
 
 	        vm.comment = {
 	          "comment": {
@@ -236,7 +214,6 @@
 	  vm.isButtonDisabled = function(){
 	    return vm.posts.length >= vm.postCount
 		}
-
 
 		vm.getUsers();
 	  vm.getPosts();

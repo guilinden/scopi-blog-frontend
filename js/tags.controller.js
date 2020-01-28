@@ -37,12 +37,8 @@
 	      url: 'http://localhost:3000/tags/' + tag_id
 	    }).then(function successCallback(response) {
 					console.log(response);
-					var len = vm.tags.length
-					for(var i=0;i<len;i++){
-							if (vm.tags[i]["id"] == tag_id) {
-								vm.tags.splice(i, 1);
-							}
-					}
+					var tagIndex = vm.tags.findIndex(tag => tag.id == tag_id);
+					vm.tags.splice(tagIndex, 1);
 	      }, function errorCallback(response) {
 	        console.log(response);
 	      });
@@ -67,13 +63,8 @@
 	      url: 'http://127.0.0.1:3000/tags/' + tag_id,
 	      data: vm.tag
 	    }).then(function successCallback(response) {
-					console.log(response);
-					var len = vm.tags.length
-					for(var i=0;i<len;i++){
-							if (vm.tags[i]["id"] == tag_id) {
-								vm.tags[i] = response.data;
-							}
-					}
+					var tagIndex = vm.tags.findIndex(tag => tag.id == tag_id);
+					vm.tags[tagIndex] = response.data;
 	      }, function errorCallback(response) {
 	        console.log(response);
 	      });
