@@ -27,6 +27,7 @@
 			<div ng-if="editMode == true">
 				<input placeholder="{{tag.name}}" type="text" ng-model="tagsCtrl.tag.tag.name">
 				<button type="button" class="btn btn-success" ng-click="tagsCtrl.updateTag(tag.id); $parent.editMode = false">Salvar</button>
+				<button type="button" class="btn btn-secondary" ng-click="$parent.editMode = false">Cancelar</button>
 			</div>
 		</td>
 		<td><button type="button" class="btn btn-primary" ng-click="editMode = true;tagsCtrl.tag.tag.name = tag.name">Editar</button></td>
