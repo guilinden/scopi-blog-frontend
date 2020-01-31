@@ -3,25 +3,46 @@
 	.module('app')
 	.config(router);
 
-	function router($routeProvider){
-		$routeProvider.
-        when('/tags',{
+	function router($stateProvider,$urlRouterProvider){
+
+		$stateProvider.
+        state('tags',{
+            url: '/tags',
             templateUrl : 'view/tags.html',
             controller: 'tagsController',
-            controllerAs: 'tagsCtrl'
+            controllerAs: 'tagsCtrl',
+
         }).
-        when("/home", {
+        state("home", {
+            url: '/home',
             templateUrl: 'view/home.html',
             controller: 'blogController',
-            controllerAs: 'BlogCtrl'
+            controllerAs: 'BlogCtrl',
+            data: {
+              //requireLogin: false
+          }
         })
-        .when("/posts", {
+        .state("posts", {
+          url: '/posts',
           templateUrl: 'view/posts.html',
           controller: 'blogController',
-          controllerAs: 'BlogCtrl'
-        }).otherwise({
-          redirectTo: '/home'
+          controllerAs: 'BlogCtrl',
+          data: {
+            requireLogin: true
+        }
+        }).state("login", {
+          url: '/login',
+          templateUrl: 'view/login.html',
+          controller: 'loginController',
+          controllerAs: 'loginCtrl',
+          data: {
+            requireLogin: false
+        }
         });
+
+
+        $urlRouterProvider
+        .otherwise('/home');
 	};
 
 })();

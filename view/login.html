@@ -1,0 +1,11 @@
+<h1>Login</h1>
+<form>
+	<div class="form-group">
+		<label>E-mail</label>
+		<input type="text" class="form-control" placeholder="E-mail" ng-model="loginCtrl.user.email">
+		<label>Senha</label>
+		<input type="password" class="form-control" placeholder="Senha" ng-model="loginCtrl.user.password">
+		<button type="submit" class="btn btn-primary" ng-click="loginCtrl.login()">Enviar</button>
+	</div>
+</form>
+<button type="submit" class="btn btn-danger" ng-click="loginCtrl.logout()">Logout</button>

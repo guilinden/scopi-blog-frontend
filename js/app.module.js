@@ -1,6 +1,8 @@
 (function(){
 	angular
 	.module('app',[
-			'ngRoute'
+			'ngStorage',
+			'ui.router',
+			'ui.router.state.events'
 	]);
 })();
